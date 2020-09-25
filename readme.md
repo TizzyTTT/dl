@@ -12,5 +12,4 @@
 6. shiro配置完成用户登录状态以及权限管理的内容，参考https://www.jianshu.com/p/7f724bec3dc3
 7. weblog api访问记录打印 参考https://www.cnblogs.com/Gent-Wang/p/11593316.html
 
-readme edit 1234
-
+readme edit 0000 1
