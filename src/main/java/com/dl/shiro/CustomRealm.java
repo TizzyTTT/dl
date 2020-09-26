@@ -6,10 +6,7 @@ import com.dl.entity.User;
 import com.dl.service.LoginService;
 import com.github.xiaoymin.knife4j.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -52,23 +49,32 @@ public class CustomRealm extends AuthorizingRealm {
 //  认证配置
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        if(authenticationToken.getPrincipal().equals(""))return null;
 
-        String name = authenticationToken.getPrincipal().toString();
-        User user = loginService.getUserByName(name);
-        if(user == null)return null;
-        else {
-            /**
-             * @param principal   the 'primary' principal associated with the specified realm.
-             * @param credentials the credentials that verify the given principal.
-             * @param realmName   the realm from where the principal and credentials were acquired.
-             *    public SimpleAuthenticationInfo(Object principal, Object credentials, String realmName) {
-             *         this.principals = new SimplePrincipalCollection(principal, realmName);
-             *         this.credentials = credentials;
-             *     }
-            */
-            return new SimpleAuthenticationInfo(user.getUserName(), user.getPassWord().toString(), getName());
+        System.out.println("============用户验证==============");
+        //从token中获取信息,此token只是shiro用于身份验证的,并非前端传过来的token.
+        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+        String username = token.getUsername();
+        String password = loginService.getUserByName(username).getPassword();
+
+        if (null == password) {
+            throw new AuthenticationException("doGetAuthenticationInfo中的用户名不对");
+        } else if (!password.equals(new String(token.getPassword()))){
+            throw new AuthenticationException("doGetAuthenticationInfo中的密码不对");
         }
+        //组合一个验证信息
+        System.out.println("token.getPrincipal()默认返回的username======"+token.getPrincipal());
+        System.out.println("getName()"+getName());
+        SimpleAuthenticationInfo info =
+                new SimpleAuthenticationInfo(token.getPrincipal(),password,getName());
+        return info;
+
+//        if(authenticationToken.getPrincipal().equals(""))return null;
+//        String name = authenticationToken.getPrincipal().toString();
+//        User user = loginService.getUserByName(name);
+//        if(user == null)return null;
+//        else {
+//            return new SimpleAuthenticationInfo(user.getUserName(), user.getPassword().toString(), getName());
+//        }
     }
 
     @ExceptionHandler

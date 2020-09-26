@@ -11,6 +11,9 @@
 5. hibernate-validator 完成数据常见的校验。
 6. shiro配置完成用户登录状态以及权限管理的内容，参考https://www.jianshu.com/p/7f724bec3dc3
 7. weblog api访问记录打印 参考https://www.cnblogs.com/Gent-Wang/p/11593316.html
-
-readme edit 1+++++
-
+8. 关于git
+<br> (1) create git repository
+<br> (2) share project on Github
+<br> (3) 右键 ->git -> add |  右键 ->git -> commit directory |  右键 ->git -> show history 
+9. 选择使用jwt不用session的原因:
+<br>需要支持多端，一个api要支持H5, PC和APP三个前端，如果使用session的话对app不是很友好，而且session有跨域攻击的问题。
