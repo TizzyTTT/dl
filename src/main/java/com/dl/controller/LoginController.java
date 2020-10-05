@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.Subject;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -35,7 +36,6 @@ public class LoginController {
         System.out.println(username +" "+password);
         return ResultFactory.buildFailResult(null);
     }
-
 
     @PostMapping("/api/admin/logout")
     @ApiOperation(value = "注销接口方法说明")

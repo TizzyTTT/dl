@@ -1,29 +1,22 @@
 package com.dl.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Table;
 import java.util.Set;
-import java.util.UUID;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "user")
+@AllArgsConstructor
 public class User {
-    @Id
-    private int id;
-    //    private UUID uuid;
-    @Column(length = 32)
-    private String userName;
-    @Column(length = 32)
-    private String password;
-
-    @Transient
-    private Set<Role> roles;
-
-
+	private String id;
+	private String userName;
+	private String password;
+	/**
+	 * 用户对应的角色集合
+	 */
+	private Set<Role> roles;
 }

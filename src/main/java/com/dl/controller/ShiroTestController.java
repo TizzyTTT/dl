@@ -1,9 +1,7 @@
 package com.dl.controller;
 
-import com.dl.dao.UserDao;
 import com.dl.entity.User;
 import com.dl.service.LoginService;
-import com.dl.service.UserService;
 import com.dl.utils.aspect.WebLog;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -17,7 +15,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+// 该controller废弃不用！！！！！！！！！
 @RestController
 @Slf4j
 public class ShiroTestController {
@@ -40,6 +38,7 @@ public class ShiroTestController {
         try{
 //            throw new AuthenticationException();
             subject.login(token);
+//            subject.logout();
         }catch (UnknownAccountException e) {
             log.error("用户名不存在！", e);
             return "用户名不存在！";
